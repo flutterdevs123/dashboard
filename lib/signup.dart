@@ -5,12 +5,16 @@ import 'package:practice_1/signin.dart';
 class Signup extends StatefulWidget {
   const Signup({super.key});
 
+  static List<String> registeredEmails = [];
+  static List <String> registeredPasswords = [];
+
   @override
   State<Signup> createState() => _SignupState();
 }
 
 class _SignupState extends State<Signup> {
 final _formKey = GlobalKey<FormState>();
+
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -27,7 +31,7 @@ final _formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        leading: Icon(Icons.chevron_left),
+
         title: Text("Signup",
         style: TextStyle(
           fontSize: 25,
@@ -46,17 +50,17 @@ final _formKey = GlobalKey<FormState>();
                 SizedBox(height: 40,),
 
                 Text("Full Name",style: TextStyle(
-                  fontSize: 10,
+                  fontSize: 15,
                   fontWeight: FontWeight.bold,
                   color: Colors.blue
                 ),),
-                SizedBox(height: 10,),
+                SizedBox(height: 5,),
                 TextFormField(
                   controller: nameController,
                   decoration: InputDecoration(
                     hintText: "Arslan",
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12)
+                      borderRadius: BorderRadius.circular(8)
                     )
                   ),
                   validator: (value){
@@ -69,18 +73,18 @@ final _formKey = GlobalKey<FormState>();
                       return null;
                   },
                 ),
-                SizedBox(height: 30,),
+                SizedBox(height: 24,),
                 Text("Email Address",style: TextStyle(
-                    fontSize: 10,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,color: Colors.blue
                 ),),
-                SizedBox(height: 10,),
+                SizedBox(height: 5,),
                 TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
                       hintText: "ars123@gmail.com",
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)
+                          borderRadius: BorderRadius.circular(8)
                       )
                   ),
                   validator: (value){
@@ -93,19 +97,19 @@ final _formKey = GlobalKey<FormState>();
                     return null;
                   },
                 ),
-                SizedBox(height: 30,),
+                SizedBox(height: 24,),
                 Text("Password",style: TextStyle(
-                    fontSize: 10,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,color: Colors.blue
                 ),),
-                SizedBox(height: 10,),
+                SizedBox(height: 5,),
                 TextFormField(
                   controller: passwordController,
                   obscureText: isObscured,
                   decoration: InputDecoration(
                       hintText: "********",
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)
+                          borderRadius: BorderRadius.circular(8)
                       ),
                     suffixIcon: IconButton(
                        onPressed: () { setState(() {
@@ -119,25 +123,25 @@ final _formKey = GlobalKey<FormState>();
                     if(value == null || value.isEmpty){
                       return "password not be empty";
                     }
-                    else if(!value.contains("123456")){
+                    else if(value.length < 6){
                       return "password must be between 1-6";
                     }
                     return null;
                   },
                 ),
-                SizedBox(height: 30,),
+                SizedBox(height: 24,),
                 Text("Confirm Password",style: TextStyle(
-                    fontSize: 10,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,color: Colors.blue
                 ),),
-                SizedBox(height: 10,),
+                SizedBox(height: 5,),
                 TextFormField(
                   controller: confirmPasswordController,
                   obscureText: isObscureChecked,
                   decoration: InputDecoration(
                       hintText: "********",
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)
+                          borderRadius: BorderRadius.circular(8)
                       ),
                     suffixIcon: IconButton(
                       onPressed: () { setState(() {
@@ -151,7 +155,7 @@ final _formKey = GlobalKey<FormState>();
                     if(value == null || value.isEmpty){
                       return "password not be empty";
                     }
-                    else if(!value.contains("123456")){
+                    else if(value.length < 6){
                       return "password must be between 1-6";
                     }
                     return null;
@@ -171,19 +175,30 @@ final _formKey = GlobalKey<FormState>();
                     Text("By Creating an Account, i accept Hiring Hub \n terms of Use and Privacy Policy")
                   ],
                 ),
-                SizedBox(height: 30,),
+                SizedBox(height: 16,),
                 Center(
                   child: SizedBox(
                     height: 60,
                     width: double.infinity,
                     child: ElevatedButton(
                         onPressed: (){
-                          if(_formKey.currentState!.validate()){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+                          if(!isChecked){
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Check the Check box")));
                           }
-                          else if( passwordController.text == confirmPasswordController){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+                          else if(passwordController.text != confirmPasswordController.text){
+
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Password did not match")));
                           }
+
+                          else if(_formKey.currentState!.validate()){
+                            Signup.registeredEmails.add(emailController.text);
+                            Signup.registeredPasswords.add(passwordController.text);
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+
+
+
+                          }
+
 
                         },
                         style: ElevatedButton.styleFrom(
@@ -209,7 +224,7 @@ final _formKey = GlobalKey<FormState>();
                     TextButton(onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context)=> Signin()));
                     }, child: Text("Sign in here",style: TextStyle(
-                      fontWeight: FontWeight.bold
+                      fontWeight: FontWeight.bold,decoration: TextDecoration.underline,decorationColor: Colors.blue
                     ),))
                   ],
                 ),

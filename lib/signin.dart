@@ -40,18 +40,18 @@ class _SigninState extends State<Signin> {
             child: Column(crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 50,),
-                Text("Email",style: TextStyle(
-                    fontSize: 10,
+                Text("Email Address",style: TextStyle(
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                   color: Colors.blue
                 ),),
-                SizedBox(height: 10,),
+                SizedBox(height: 5,),
                 TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
-                      hintText: "Arslan",
+                      hintText: "arslan123@.com",
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)
+                          borderRadius: BorderRadius.circular(8)
                       )
                   ),
                     validator: (value){
@@ -67,18 +67,18 @@ class _SigninState extends State<Signin> {
 
                 SizedBox(height: 30,),
                 Text("Password",style: TextStyle(
-                    fontSize: 10,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold,
                   color: Colors.blue
                 ),),
-                SizedBox(height: 10,),
+                SizedBox(height: 5,),
                 TextFormField(
                   controller: passwordController,
                   obscureText: isObscured,
                   decoration: InputDecoration(
                       hintText: "********",
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)
+                          borderRadius: BorderRadius.circular(8)
                       ),
                     suffixIcon: IconButton(
                       onPressed: () { setState(() {
@@ -92,7 +92,7 @@ class _SigninState extends State<Signin> {
                     if(value == null || value.isEmpty){
                       return "Passwor khali nahi ho sakta";
                     }
-                    else if(!value.contains("123456")){
+                    else if(value.length<6){
                       return "password must between 1-6";
                     }
                     return null;
@@ -106,7 +106,7 @@ class _SigninState extends State<Signin> {
                     color: Colors.blue),)),
                   ],
                 ),
-                SizedBox(height: 30,),
+                SizedBox(height: 20,),
 
                 Row(
                   children: [
@@ -115,11 +115,15 @@ class _SigninState extends State<Signin> {
                         isChecked = newValue ?? false;
                       });
                     }),
-                    SizedBox(width: 10,),
-                    Text("Keep me Signed in")
+
+                    Text("Keep me Signed in",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13
+                    ),)
                   ],
                 ),
-                SizedBox(height: 30,),
+                SizedBox(height: 10,),
                 Center(
                   child: SizedBox(
                     height: 60,
@@ -127,7 +131,22 @@ class _SigninState extends State<Signin> {
                     child: ElevatedButton(
                         onPressed: (){
                           if(_formKey.currentState!.validate()){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+
+                            if(!isChecked){
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Check the 'keep me Signed in'")));
+                            }
+                            String enteredEmail = emailController.text;
+                            String enteredPassword = passwordController.text;
+
+                            int index = Signup.registeredEmails.indexOf(enteredEmail);
+                            if(index != -1 &&Signup.registeredPasswords[index] == enteredPassword){
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+                            }
+
+
+                            else{
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Email ya Password Galat ha ")));
+                            }
                           }
                         },
                         style: ElevatedButton.styleFrom(
@@ -166,7 +185,8 @@ class _SigninState extends State<Signin> {
                     SizedBox(width: 2,),
                     TextButton(onPressed: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context)=> Signup()));
-                    }, child: Text("Sign up here",style: TextStyle(fontWeight: FontWeight.bold),))
+                    }, child: Text("Sign up here",style: TextStyle(fontWeight: FontWeight.bold,decoration: TextDecoration.underline,
+                    decorationColor: Colors.blue),))
                   ],
                 )
               ],

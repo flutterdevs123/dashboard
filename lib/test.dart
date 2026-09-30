@@ -74,4 +74,10 @@
 //
 //   print("$empty");
 // }
+void main(){
+  List<int> largest = [23,45,67,45,68];
 
+  if(largest[0] < largest[1]){
+    print("1st element");
+  }
+}
