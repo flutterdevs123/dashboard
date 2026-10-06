@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practice_1/home_screen.dart';
 import 'package:practice_1/signin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -181,18 +182,31 @@ final _formKey = GlobalKey<FormState>();
                     height: 60,
                     width: double.infinity,
                     child: ElevatedButton(
-                        onPressed: (){
+                        onPressed: () async {
                           if(!isChecked){
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Check the Check box")));
+                            return;
                           }
                           else if(passwordController.text != confirmPasswordController.text){
 
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Password did not match")));
+                            return;
                           }
 
                           else if(_formKey.currentState!.validate()){
+
+                            final prefs = await SharedPreferences.getInstance();
+                            await prefs.setString('currentUserName', nameController.text);
+                            await prefs.setString('currentUserEmail', emailController.text);
                             Signup.registeredEmails.add(emailController.text);
                             Signup.registeredPasswords.add(passwordController.text);
+
+                            //Shared preference is used
+
+                            await prefs.setStringList('savedEmails', Signup.registeredEmails);
+                            await prefs.setStringList('savedPasswords', Signup.registeredPasswords);
+                            await prefs.setBool('isLoggedIn', true);
+
                             Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
 
 

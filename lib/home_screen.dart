@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -8,7 +9,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  String userName = "Loading...";
   int _currentIndex = 0;
+  String userEmail = '';
+  @override
+  void initState() {
+    super.initState();
+    loadUserName();
+  }
+    Future <void> loadUserName() async{
+
+      final prefs = await SharedPreferences.getInstance();
+      setState(() {
+        userName = prefs.getString('currentUserName') ?? "User";
+        userEmail = prefs.getString('currentUserEmail') ?? "Email";
+      });
+    }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
             title: Column(
               children: [
                 Text("Good Morning",style: TextStyle(fontSize: 12,fontWeight: FontWeight.bold),),
-                Text("Mr.Ahmed",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18, color: Color(0xDD2F80ED),),)
+                Text(userName,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18, color: Color(0xDD2F80ED),),),
+                Text(userEmail,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18, color: Color(0xDD2F80ED),),)
               ],
             ),
             actions: [

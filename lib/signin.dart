@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice_1/signup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'home_screen.dart';
 
@@ -129,17 +130,24 @@ class _SigninState extends State<Signin> {
                     height: 60,
                     width: double.infinity,
                     child: ElevatedButton(
-                        onPressed: (){
+                        onPressed: () async {
                           if(_formKey.currentState!.validate()){
 
                             if(!isChecked){
                               ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Please Check the 'keep me Signed in'")));
+                              return;
                             }
                             String enteredEmail = emailController.text;
                             String enteredPassword = passwordController.text;
 
-                            int index = Signup.registeredEmails.indexOf(enteredEmail);
-                            if(index != -1 &&Signup.registeredPasswords[index] == enteredPassword){
+                            //Shared Preference ko use karna
+
+                            final prefs = await SharedPreferences.getInstance();
+                            List<String> savedEmail = prefs.getStringList('savedEmails',) ?? [];
+                            List<String> savedPassword = prefs.getStringList('savedPasswords') ?? [];
+
+                            int index = savedEmail.indexOf(enteredEmail);
+                            if(index != -1 &&savedPassword[index] == enteredPassword){
                               Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
                             }
 
