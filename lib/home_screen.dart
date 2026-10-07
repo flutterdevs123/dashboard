@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:practice_1/onboarding_1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -395,25 +396,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.blue,
-          unselectedItemColor: Colors.grey,
-          onTap: (index){
-          setState(() {
-            _currentIndex = index;
-          });
-          },
 
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home),label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.person_search),label: "Doctors"),
-            BottomNavigationBarItem(icon: Icon(Icons.calendar_today),label: "Appointments"),
-            BottomNavigationBarItem(icon: Icon(Icons.chat_bubble),label: "Support"),
-            BottomNavigationBarItem(icon: Icon(Icons.percent_outlined),label: "Profile"),
-
-          ]),
     );
   }
 }

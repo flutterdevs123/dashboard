@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:practice_1/signup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'bottom_nav_bar.dart';
 import 'home_screen.dart';
 
 class Signin extends StatefulWidget {
@@ -148,7 +149,7 @@ class _SigninState extends State<Signin> {
 
                             int index = savedEmail.indexOf(enteredEmail);
                             if(index != -1 &&savedPassword[index] == enteredPassword){
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=> Home1Screen()));
                             }
 
 

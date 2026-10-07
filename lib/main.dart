@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:practice_1/home_screen.dart';
-import 'package:practice_1/signin.dart';
+import 'package:practice_1/signup.dart';
+import 'package:practice_1/test.dart';
+
+
 
 
 
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
 
-      home: Signin()
+      home: DashboardScreen()
     );
   }
 }

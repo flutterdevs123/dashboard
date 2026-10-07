@@ -158,11 +158,85 @@
 //   }
 
 
+//
+// void main() {
+//  int number = 5;
+//
+//  int nuwNum = number -1 ;
+//  nuwNum = number * nuwNum;
+//  print(nuwNum);
+// }
+import 'package:flutter/material.dart';
 
-void main() {
- int number = 5;
+class DashboardScreen extends StatelessWidget {
+ @override
+ Widget build(BuildContext context) {
+  return Scaffold(
+   appBar: AppBar(
+    title: Text("Expense Tracker"),
+    actions: [
+     Icon(Icons.person),
+     SizedBox(width: 16),
+    ],
+   ),
+   body: Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+     crossAxisAlignment: CrossAxisAlignment.start,
+     children: [
+      // 1. Total Balance Card
+      Container(
+       width: double.infinity,
+       padding: EdgeInsets.all(20),
+       decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(16),
+       ),
+       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+         Text("Total Balance", style: TextStyle(color: Colors.white, fontSize: 16)),
+         SizedBox(height: 8),
+         Text("Rs. 35,000", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
+        ],
+       ),
+      ),
+      SizedBox(height: 20),
 
- int nuwNum = number -1 ;
- nuwNum = number * nuwNum;
- print(nuwNum);
+      // 2. Heading
+      Text("Recent Expenses", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      SizedBox(height: 10),
+
+      // 3. Transactions List (Aage chal kar yahan ListView aayegi)
+      Expanded(
+       child: ListView(
+        children: [
+         ListTile(
+          leading: Icon(Icons.shopping_cart, color: Colors.blue),
+          title: Text("Grocery"),
+          subtitle: Text("Today, 2:00 PM"),
+          trailing: Text("- Rs. 2,000", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+         ),
+         ListTile(
+          leading: Icon(Icons.flash_on, color: Colors.orange),
+          title: Text("Electricity Bill"),
+          subtitle: Text("Yesterday"),
+          trailing: Text("- Rs. 5,000", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
+         ),
+        ],
+       ),
+      ),
+     ],
+    ),
+   ),
+
+   // 4. Floating Action Button (+)
+   floatingActionButton: FloatingActionButton(
+    onPressed: () {
+     // Yahan naye page par jane ka code aayega
+    },
+    child: Icon(Icons.add),
+   ),
+  );
+ }
 }

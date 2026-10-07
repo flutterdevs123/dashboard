@@ -3,6 +3,8 @@ import 'package:practice_1/home_screen.dart';
 import 'package:practice_1/signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'bottom_nav_bar.dart';
+
 class Signup extends StatefulWidget {
   const Signup({super.key});
 
@@ -207,7 +209,7 @@ final _formKey = GlobalKey<FormState>();
                             await prefs.setStringList('savedPasswords', Signup.registeredPasswords);
                             await prefs.setBool('isLoggedIn', true);
 
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> Home1Screen()));
 
 
 
