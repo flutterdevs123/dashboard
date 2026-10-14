@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:practice_1/home_screen.dart';
 import 'package:practice_1/signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,7 +24,7 @@ final _formKey = GlobalKey<FormState>();
   TextEditingController confirmPasswordController = TextEditingController();
 
   bool isObscured = true;
-  bool isObscureChecked = false;
+  bool isObscureChecked = true;
 
   bool isChecked = false;
 
@@ -70,7 +69,7 @@ final _formKey = GlobalKey<FormState>();
                     if(value == null || value.isEmpty){
                       return "name zaroori ha";
                     }
-                    else if(!value.contains("ars")){
+                    else if(value.length < 6){
                       return "name must contain minimum 3 chars";
                     }
                       return null;

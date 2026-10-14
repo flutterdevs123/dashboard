@@ -168,74 +168,65 @@
 // }
 import 'package:flutter/material.dart';
 
-class DashboardScreen extends StatelessWidget {
+void main() {
+ runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+ const MyApp({super.key});
+
+ @override
+ Widget build(BuildContext context) {
+  return const MaterialApp(
+   debugShowCheckedModeBanner: false,
+   home: ListViewScreen(),
+  );
+ }
+}
+
+class ListViewScreen extends StatelessWidget {
+ const ListViewScreen({super.key});
+
+ // 1. Aapka data (Yeh API ya Database se bhi aa sakta hai)
+ final List<String> _names = const [
+  'Ali Ahmed',
+  'Bilal Khan',
+  'Usman Ali',
+  'Ayesha Bibi',
+  'Fatima Noor',
+  'Zainab Malik',
+ ];
+
  @override
  Widget build(BuildContext context) {
   return Scaffold(
    appBar: AppBar(
-    title: Text("Expense Tracker"),
-    actions: [
-     Icon(Icons.person),
-     SizedBox(width: 16),
-    ],
+    title: const Text('ListView.builder Example'),
    ),
-   body: Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Column(
-     crossAxisAlignment: CrossAxisAlignment.start,
-     children: [
-      // 1. Total Balance Card
-      Container(
-       width: double.infinity,
-       padding: EdgeInsets.all(20),
-       decoration: BoxDecoration(
-        color: Colors.blue,
-        borderRadius: BorderRadius.circular(16),
+   // 2. ListView.builder ka istemal
+   body: ListView.builder(
+    itemCount: _names.length, // List mein kitne items hain (Yeh lazmi batana hota hai)
+    itemBuilder: (context, index) {
+     // 3. Har ek item ke liye yeh design bar bar repeat hoga
+     return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: ListTile(
+       leading: CircleAvatar(
+        child: Text(_names[index][0]), // Naam ka pehla letter icon ki jagah
        ),
-       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-         Text("Total Balance", style: TextStyle(color: Colors.white, fontSize: 16)),
-         SizedBox(height: 8),
-         Text("Rs. 35,000", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
-        ],
+       title: Text(
+        _names[index],
+        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
        ),
+       subtitle: Text('User index: $index'), // Yahan aap index bhi dekh sakte hain
+       trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+       onTap: () {
+        // Jab kisi specific item par click ho
+        print('Tapped on: ${_names[index]} at index $index');
+       },
       ),
-      SizedBox(height: 20),
-
-      // 2. Heading
-      Text("Recent Expenses", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-      SizedBox(height: 10),
-
-      // 3. Transactions List (Aage chal kar yahan ListView aayegi)
-      Expanded(
-       child: ListView(
-        children: [
-         ListTile(
-          leading: Icon(Icons.shopping_cart, color: Colors.blue),
-          title: Text("Grocery"),
-          subtitle: Text("Today, 2:00 PM"),
-          trailing: Text("- Rs. 2,000", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-         ),
-         ListTile(
-          leading: Icon(Icons.flash_on, color: Colors.orange),
-          title: Text("Electricity Bill"),
-          subtitle: Text("Yesterday"),
-          trailing: Text("- Rs. 5,000", style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold)),
-         ),
-        ],
-       ),
-      ),
-     ],
-    ),
-   ),
-
-   // 4. Floating Action Button (+)
-   floatingActionButton: FloatingActionButton(
-    onPressed: () {
-     // Yahan naye page par jane ka code aayega
+     );
     },
-    child: Icon(Icons.add),
    ),
   );
  }

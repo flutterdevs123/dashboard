@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:practice_1/onboarding_1.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,7 +10,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   String userName = "Loading...";
-  int _currentIndex = 0;
   String userEmail = '';
   @override
   void initState() {
@@ -42,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
             leading: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: CircleAvatar(
-                radius: 10,
+                  radius: 10,
                   backgroundColor: Colors.grey,
                   backgroundImage: AssetImage("assets/images/img_1.png"),
                   child: Icon(Icons.eighteen_mp)),
@@ -59,8 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(right: 26.0),
                 child: Container(
 
-                  height:40,
-                width: 40,
+                    height:40,
+                    width: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(22),
                       color: Color(0xDD2F80ED),
@@ -90,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  child: Column(
                    crossAxisAlignment: CrossAxisAlignment.start,
                    children: [
-                     Text("Free Health \n Checkup",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,
+                     Text("Free Health \nCheckup",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,
                      color: Colors.white),),
                      SizedBox(height: 8,),
                      Row(

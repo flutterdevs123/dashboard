@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:practice_1/signup.dart';
-import 'package:practice_1/test.dart';
-
-
-
-
-
+import 'package:practice_1/new_signup.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
 
-      home: DashboardScreen()
+      home: NewSignup()
     );
   }
 }
